@@ -1,0 +1,134 @@
+import java.util.*;
+
+public class loginMenu
+{
+    //Defining important variables
+    static String userinput;
+    static String passinput;
+    static boolean hasAccount;
+    //Creating a scanner object
+    public static Scanner scan = new Scanner(System.in);
+
+    //Creating arrays of class accountInfo (Can store up to 10 usernames and passwords combination)
+    static accountInfo[] accounts = new accountInfo[10];
+
+    //Checking if user has an account or wants to make a new account
+    static void hasAccount()
+    {
+        System.out.print("Press 1 to log in or press 2 to make a new account: ");
+        String choice = scan.nextLine();
+        if(choice.equals("1"))
+        {
+            hasAccount = true;
+        }
+        if(choice.equals("2"))
+        {
+            hasAccount = false;
+        }
+    }
+
+    //Checking user input values with stored values in objects
+    static void accountLogin()
+    {   
+        //Getting login information
+        System.out.println("Welcome to the login screen. Please enter in your credentials.");
+        System.out.print("Username: ");
+        userinput = scan.nextLine();
+        System.out.print("Password: ");
+        passinput = scan.nextLine();
+
+        //Creating an outerloop to break out of later to prevent repeating messages
+        outerloop:
+        for(int i = 0; i < accounts.length; i++)
+        {
+            //Matching entered info with stored info. If there's a match, method will return a true value
+            boolean correctInfo = accounts[i].getLogin(userinput, passinput);
+            
+            //These conditions below will only be met if correctInfo returns true
+            if (correctInfo)
+            {
+                System.out.print("Welcome " + userinput + "!");
+                break outerloop;
+            }
+            if (!correctInfo && i == (accounts.length - 1))
+            {
+                System.out.print("Incorrect username/password.");
+                break outerloop;
+            }
+        }
+    }
+
+
+    public static void main(String[] arg)
+    {
+        //initializing array with objects of class accountInfo
+        for(int i = 0; i < accounts.length; i++)
+        {   
+            accounts[i] = new accountInfo();
+        }
+
+        //Checking if user wants to login or make an account
+        hasAccount();
+        if (!hasAccount)
+        {
+            //Allowing user to keep creating accounts up to the maximum array limit that is set
+            for(int i = 0; i < accounts.length; i++)
+            {
+                System.out.print("Enter a username: ");
+                userinput = scan.nextLine();
+                System.out.print("Enter a password: ");
+                passinput = scan.nextLine();
+
+                //Initalizing the String variables in the created object accounts[i]
+                
+                accounts[i].setLogin(userinput, passinput);
+
+                //If user chooses to login, this statement will cause break from the for loop
+                if (hasAccount)
+                {
+                    break;
+                }
+                
+                //This statement will only run if there are stil enough space left in the array to store new accounts
+                if (i < (accounts.length - 1))
+                {
+                    hasAccount();
+                }
+            }
+        }
+
+
+        //Allows user to login
+        accountLogin();
+    }
+}
+
+//Class for storing user account information
+class accountInfo
+{
+    //Variables to store login information
+    private String username;
+    private String password;
+    boolean correctInfo;
+
+    //Method for storing username and passwords
+    void setLogin(String userinput, String passinput)
+    {
+        username = userinput;
+        password = passinput;
+    }
+
+    //Method for matching entered username and password with those stored in the class. Returns a boolean
+    boolean getLogin(String userinput, String passinput)
+    {
+        if (userinput.equals(username) && passinput.equals(password))
+        {
+            correctInfo = true;
+        }
+        else
+        {
+            correctInfo = false;
+        }
+        return correctInfo;
+    }
+}
