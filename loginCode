@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.*;
 
 public class loginMenu
@@ -29,7 +31,7 @@ public class loginMenu
 
     //Checking user input values with stored values in objects
     static void accountLogin()
-    {   
+    {
         //Getting login information
         System.out.println("Welcome to the login screen. Please enter in your credentials.");
         System.out.print("Username: ");
@@ -43,7 +45,7 @@ public class loginMenu
         {
             //Matching entered info with stored info. If there's a match, method will return a true value
             boolean correctInfo = accounts[i].getLogin(userinput, passinput);
-            
+
             //These conditions below will only be met if correctInfo returns true
             if (correctInfo)
             {
@@ -63,7 +65,7 @@ public class loginMenu
     {
         //initializing array with objects of class accountInfo
         for(int i = 0; i < accounts.length; i++)
-        {   
+        {
             accounts[i] = new accountInfo();
         }
 
@@ -74,25 +76,27 @@ public class loginMenu
             //Allowing user to keep creating accounts up to the maximum array limit that is set
             for(int i = 0; i < accounts.length; i++)
             {
+
+
                 System.out.print("Enter a username: ");
                 userinput = scan.nextLine();
                 System.out.print("Enter a password: ");
                 passinput = scan.nextLine();
 
-                //Initalizing the String variables in the created object accounts[i]
-                
-                accounts[i].setLogin(userinput, passinput);
+                //Initializing the String variables in the created object accounts[i]
 
-                //If user chooses to login, this statement will cause break from the for loop
-                if (hasAccount)
-                {
-                    break;
-                }
+                accounts[i].setLogin(userinput, passinput);
                 
-                //This statement will only run if there are stil enough space left in the array to store new accounts
+                //This statement will only run if there are still enough space left in the array to store new accounts
                 if (i < (accounts.length - 1))
                 {
                     hasAccount();
+
+                    //If user chooses to login, this statement will cause a break from the for loop and if statement
+                    if (hasAccount)
+                    {
+                        break;
+                    }
                 }
             }
         }
