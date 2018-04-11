@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.*;
 
-public class Main
+public class loginMenu
 {
     //Defining important variables
     static String userinput;
